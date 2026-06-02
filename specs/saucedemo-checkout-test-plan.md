@@ -1,111 +1,139 @@
-# SauceDemo Checkout Test Plan
+# Saucedemo Checkout Test Plan
 
 ## Overview
-This test plan covers the e-commerce checkout process for Sauce Demo using the user story in `user-stories/SCRUM-101-E-commerce-Checkout-Process.md`.
-
-Application URL: https://www.saucedemo.com
-Test credentials: `standard_user` / `secret_sauce`
+This test plan covers the full checkout workflow for the Sauce Demo application using the user story in `user-stories/SCRUM-101-E-commerce-Checkout-Process.md`.
 
 ## Scope
-- Cart review and item details
-- Checkout information entry and validation
-- Order overview and summary validation
-- Order completion confirmation
-- Error handling and negative checkout scenarios
-- Navigation and cancel behavior
+- Validate cart review and checkout flow
+- Validate checkout information form behavior and required field validation
+- Validate order overview details, payment/shipping summary, and totals
+- Validate order completion and confirmation
+- Validate error handling for invalid or missing checkout data
+- Validate cancel/back navigation during checkout
 
-## Acceptance Criteria Covered
-- AC1: Cart Review
-- AC2: Checkout Information Entry
-- AC3: Order Overview
-- AC4: Order Completion
-- AC5: Error Handling
+## Application
+- URL: https://www.saucedemo.com
+- Test credentials:
+  - Username: `standard_user`
+  - Password: `secret_sauce`
+
+## Test Data
+- First Name: `Test`
+- Last Name: `User`
+- Zip/Postal Code: `12345`
 
 ## Test Cases
 
-### 1. Cart Review
-**Title:** Verify cart review page shows added items and checkout options
-
-**Preconditions:** User is logged in and has added items to the cart.
-
-**Steps:**
-1. Login with standard_user / secret_sauce.
-2. Add at least two products to the cart.
-3. Click the cart icon.
+### TC-01: Login and Add Items to Cart
+1. Go to `https://www.saucedemo.com`
+2. Enter username `standard_user`
+3. Enter password `secret_sauce`
+4. Click `Login`
+5. Add the first available product to cart
+6. Open the shopping cart
 
 **Expected Results:**
-- The cart page loads and shows all added items.
-- Each item displays name, description, price, and quantity.
-- The cart page shows buttons to continue shopping and proceed to checkout.
+- User is logged in successfully
+- At least one product is visible in the cart
+- Product details include name, description, price, and quantity
+- Cart badge updates to show the number of items
 
-**Notes:** If the site does not display a cart total on the cart page, verify item prices and proceed to checkout for summary validation.
+---
 
-### 2. Checkout Information Entry
-**Title:** Verify checkout information page requires all fields
-
-**Preconditions:** User is on the cart page with items in cart.
-
-**Steps:**
-1. Click Checkout.
-2. On the checkout information page, leave one or more fields empty.
-3. Click Continue.
+### TC-02: Cart Review and Proceed to Checkout
+1. From the cart page, verify each cart item detail
+2. Verify the total price is displayed
+3. Click `Checkout`
 
 **Expected Results:**
-- The checkout information page shows fields for First Name, Last Name, and Zip/Postal Code.
-- If any field is empty, an error message indicates the missing field.
-- The user cannot advance until each required field is complete.
+- Cart page shows all selected items with correct information
+- Total price is visible
+- Clicking `Checkout` navigates to the Checkout Information page
 
-### 3. Order Overview
-**Title:** Verify checkout overview page displays order summary and totals
+---
 
-**Preconditions:** User has entered valid checkout information.
-
-**Steps:**
-1. Fill first name, last name, and zip code.
-2. Click Continue.
-
-**Expected Results:**
-- The order overview page loads.
-- The page shows a summary of all order items.
-- Payment and shipping information is visible.
-- Subtotal, tax, and total amounts are shown.
-- Buttons to Cancel and Finish the order are available.
-
-### 4. Order Completion
-**Title:** Verify order confirmation after finishing checkout
-
-**Preconditions:** User is on the order overview page.
-
-**Steps:**
-1. Click Finish.
+### TC-03: Checkout Information Required Fields Validation
+1. On the Checkout Information page, leave `First Name` empty
+2. Enter `Last Name` and `Zip/Postal Code`
+3. Click `Continue`
+4. Repeat for each empty required field: `Last Name`, `Zip/Postal Code`
 
 **Expected Results:**
-- The order confirmation page loads.
-- The page displays a success message confirming the order.
-- A Back Home button is visible to return to products.
+- The system shows an error message for the missing required field
+- The user cannot proceed until all required fields are filled
+- Error messages identify the specific missing field
 
-### 5. Error Handling
-**Title:** Verify checkout validation prevents incomplete data submission
+---
 
-**Preconditions:** User is on the checkout information page.
-
-**Steps:**
-1. Enter invalid or incomplete checkout information.
-2. Click Continue.
+### TC-04: Checkout Information Success
+1. On the Checkout Information page, enter valid values for all fields
+   - `First Name`: `Test`
+   - `Last Name`: `User`
+   - `Zip/Postal Code`: `12345`
+2. Click `Continue`
 
 **Expected Results:**
-- Required field errors are shown for missing values.
-- The user cannot proceed until required data is entered.
-- If the application supports format validation, invalid values are rejected.
+- The application navigates to the Checkout Overview page
+- User sees shipping address and payment information summary
+- The selected items are listed with name, description, quantity, and price
+- Subtotal, tax, and total amount are displayed
 
-## Test Data
-- Username: `standard_user`
-- Password: `secret_sauce`
-- First Name: `Test`
-- Last Name: `User`
-- Postal Code: `12345`
+---
+
+### TC-05: Order Overview and Finish Order
+1. On the Checkout Overview page, review all order details
+2. Confirm the item list, shipping info, and price summary
+3. Click `Finish`
+
+**Expected Results:**
+- The application navigates to the Order Confirmation page
+- A success message is displayed confirming the order
+- A `Back Home` button is visible
+- Order summary or confirmation content is present
+
+---
+
+### TC-06: Order Completion Navigation
+1. On the Order Confirmation page, click `Back Home`
+
+**Expected Results:**
+- User is redirected back to the products page
+- The cart is empty after order completion
+- The products page loads successfully
+
+---
+
+### TC-07: Checkout Cancellation
+1. On the Checkout Information page, click `Cancel`
+2. Confirm the user returns to the cart page
+3. On the Checkout Overview page, click `Cancel`
+
+**Expected Results:**
+- Both cancel actions return the user to the cart page
+- The cart contents remain intact after cancellation
+- The user can restart checkout from the cart page
+
+---
+
+### TC-08: Invalid Data Validation
+1. On the Checkout Information page, enter invalid values such as special characters in required fields
+2. Click `Continue`
+
+**Expected Results:**
+- Appropriate validation error messages are shown for invalid input
+- The user cannot proceed until the data is corrected
+- The checkout process remains on the Checkout Information page
+
+---
+
+## Test Coverage
+- AC1: Cart Review
+- AC2: Checkout Information Entry and validation
+- AC3: Order Overview content and totals
+- AC4: Order Completion confirmation
+- AC5: Error Handling for missing/invalid input
 
 ## Notes
-- Use Playwright to automate the flow across Chromium, Firefox, and WebKit.
-- Capture screenshots for failure states and key workflow transitions.
-- Document any mismatches between acceptance criteria and actual UI behavior.
+- If any page or element is not available, capture the failure details and screenshots.
+- Use stable selectors such as element roles, visible labels, and data-test attributes when automating.
+- Keep the checkout flow test cases independent and repeatable.
