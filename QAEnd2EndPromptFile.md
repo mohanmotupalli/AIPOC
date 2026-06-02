@@ -38,7 +38,7 @@ Based on the user story SCRUM-101 that we just reviewed, use the playwright-test
   - Navigation flow tests 
   - UI element validation 
 
-4.	Save the test plan as: specs/saucedemo-checkout-test-plan.md 
+4.	Save the test plan as: specs/saucedemo-checkout-test-plan-2.md 
 
 Ensure each test scenario includes:
  - Clear test case title 
@@ -60,7 +60,7 @@ Ensure each test scenario includes:
 ...
 
 Now I need to perform manual exploratory testing using Playwright MCP browser tools.
-Please read the test plan from: specs/saucedemo-checkout-test-plan.md
+Please read the test plan from: specs/saucedemo-checkout-test-plan-2.md
 
 Then execute the test scenarios defined in that plan:
 1.	Use Playwright browser tools to manually execute each test scenario from the plan 
@@ -165,7 +165,7 @@ Please compile results from:
 - Step 4: Generated automation scripts
 - Step 5: Automated test execution and healing results
 
-Structure the report as: test-results/SCRUM-101-checkout-test-report.md
+Structure the report as: test-results/SCRUM-101-checkout-test-report-2.md
 
 Include:
 
